@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace RandomApp;
 
 public partial class VariationsPage : ContentPage
@@ -13,12 +15,16 @@ public partial class VariationsPage : ContentPage
 		int min = int.Parse(minEntry.Text);
 		int max = int.Parse(maxEntry.Text) + 1;
 		int amount = int.Parse(amountEntry.Text);
-		resultLabel.Text = string.Empty;
+		//resultLabel.Text = string.Empty;
+		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < amount; i++)
 		{
 			int result = r.Next(min, max);
-			resultLabel.Text += result;
-			if (i + 1 < amount) resultLabel.Text += ", ";
+			sb.Append(result);
+			//resultLabel.Text += result;
+
+			if (i + 1 < amount) sb.Append(", ");//resultLabel.Text += ", ";
 		}
+		resultLabel.Text = sb.ToString();
     }
 }
