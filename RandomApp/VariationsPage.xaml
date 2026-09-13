@@ -23,11 +23,11 @@
             </HorizontalStackLayout>
             <HorizontalStackLayout>
                 <Label Text="Unique in one row"/>
-                <Switch x:Name="swUniqueOneRow" Toggled="swUniqueOneRow_Toggled"/>
+                <Switch x:Name="swUniqueOneRow" Toggled="OnUniqueOneRowToggled"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout>
                 <Label Text="Unique among all rows"/>
-                <Switch x:Name="swUniqueAllRows" Toggled="swUniqueAllRows_Toggled"/>
+                <Switch x:Name="swUniqueAllRows" Toggled="OnUniqueAllRowsToggled"/>
             </HorizontalStackLayout>
             <Button Text="Generate" Clicked="OnGenerateClicked"/>
             <Label x:Name="resultLabel"/>

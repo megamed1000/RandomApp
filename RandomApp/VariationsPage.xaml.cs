@@ -39,12 +39,51 @@ public partial class VariationsPage : ContentPage
 			{
 				if (swUniqueAllRows.IsToggled)
 				{
+                    
+                    List<int> availableNumbers = Enumerable.Range(min, max - min + 1).ToList();
+                    StringBuilder sb = new();
+                    for (int rn = 1; rn <= rows; rn++)//row number
+                    {
+                        sb.Append($"Row {rn}: ");
 
-				}
+                        
+
+                        
+                        for (int ri = 0; ri < amount; ri++)//row index
+                        {
+                            int index = r.Next(availableNumbers.Count);
+                            int result = availableNumbers[index];
+                            availableNumbers.RemoveAt(index);
+                            sb.Append(result);
+                            if (ri + 1 < amount) sb.Append(", ");
+                        }
+                        if (rn < rows) sb.Append('\n');
+                    }
+                    resultLabel.Text = sb.ToString();
+                }
 				else
 				{
+                    StringBuilder sb = new();
+                    
+                    
 
-				}
+                    for (int rn = 1; rn <= rows; rn++)//row number
+                    {
+                        sb.Append($"Row {rn}: ");
+                        
+                        List<int> availableNumbers = Enumerable.Range(min, max - min + 1).ToList();
+                        for (int ri = 0; ri < amount; ri++)//row index
+                        {
+                            int index = r.Next(availableNumbers.Count);
+                            int result = availableNumbers[index];
+                            availableNumbers.RemoveAt(index);
+                            sb.Append(result);
+                            if (ri + 1 < amount) sb.Append(", ");
+                        }
+                        if (rn < rows) sb.Append('\n');
+                    }
+                    resultLabel.Text = sb.ToString();
+                }
 			}
 			else
 			{
@@ -65,11 +104,11 @@ public partial class VariationsPage : ContentPage
             }
 		}
 	}
-    private void swUniqueOneRow_Toggled(object sender, ToggledEventArgs e)
+    private void OnUniqueOneRowToggled(object sender, ToggledEventArgs e)
     {
 		if (!swUniqueOneRow.IsToggled) swUniqueAllRows.IsToggled = false;
     }
-    private void swUniqueAllRows_Toggled(object sender, ToggledEventArgs e)
+    private void OnUniqueAllRowsToggled(object sender, ToggledEventArgs e)
     {
 		if(swUniqueAllRows.IsToggled) swUniqueOneRow.IsToggled = true; 
     }
