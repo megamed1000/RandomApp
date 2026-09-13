@@ -9,8 +9,8 @@ public partial class VariationsPage : ContentPage
     public VariationsPage()
 	{
         InitializeComponent();
-		swUniqueOneRow.IsToggled =Preferences.Get("UniqueOneRow", false);
-        swUniqueAllRows.IsToggled = Preferences.Get("UniqueAllRows", false);
+		swUniqueOneRow.IsToggled =Preferences.Default.Get("UniqueOneRow", false);
+        swUniqueAllRows.IsToggled = Preferences.Default.Get("UniqueAllRows", false);
     }
 
 	public void OnGenerateClicked(object sender, EventArgs e)
@@ -31,79 +31,72 @@ public partial class VariationsPage : ContentPage
         {
             return;
         }
-        Preferences.Set("UniqueAllRows", swUniqueAllRows.IsToggled);
-		Preferences.Set("UniqueOneRow", swUniqueOneRow.IsToggled);
+        Preferences.Default.Set("UniqueAllRows", swUniqueAllRows.IsToggled);
+		Preferences.Default.Set("UniqueOneRow", swUniqueOneRow.IsToggled);
         if (modePicker.SelectedIndex == 0)
 		{
-			if (swUniqueOneRow.IsToggled)
-			{
-				if (swUniqueAllRows.IsToggled)
-				{
-                    
-                    List<int> availableNumbers = Enumerable.Range(min, max - min + 1).ToList();
-                    StringBuilder sb = new();
-                    for (int rn = 1; rn <= rows; rn++)//row number
-                    {
-                        sb.Append($"Row {rn}: ");
-
-                        
-
-                        
-                        for (int ri = 0; ri < amount; ri++)//row index
-                        {
-                            int index = r.Next(availableNumbers.Count);
-                            int result = availableNumbers[index];
-                            availableNumbers.RemoveAt(index);
-                            sb.Append(result);
-                            if (ri + 1 < amount) sb.Append(", ");
-                        }
-                        if (rn < rows) sb.Append('\n');
-                    }
-                    resultLabel.Text = sb.ToString();
-                }
-				else
-				{
-                    StringBuilder sb = new();
-                    
-                    
-
-                    for (int rn = 1; rn <= rows; rn++)//row number
-                    {
-                        sb.Append($"Row {rn}: ");
-                        
-                        List<int> availableNumbers = Enumerable.Range(min, max - min + 1).ToList();
-                        for (int ri = 0; ri < amount; ri++)//row index
-                        {
-                            int index = r.Next(availableNumbers.Count);
-                            int result = availableNumbers[index];
-                            availableNumbers.RemoveAt(index);
-                            sb.Append(result);
-                            if (ri + 1 < amount) sb.Append(", ");
-                        }
-                        if (rn < rows) sb.Append('\n');
-                    }
-                    resultLabel.Text = sb.ToString();
-                }
-			}
-			else
-			{
-                StringBuilder sb = new();
-                for (int rn = 1; rn <= rows; rn++)//row number
+            StringBuilder sb = new();
+            int[,] result = GenerateRows(min, max, amount, rows, swUniqueOneRow.IsToggled, swUniqueAllRows.IsToggled);
+            for(int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < amount; j++)
                 {
-                    sb.Append($"Row {rn}: ");
-                    int[] results = r.GetItems<int>(Enumerable.Range(min, max - min + 1).ToArray(), amount);
-                    for (int ri = 0; ri < amount; ri++)//row index
-                    {
-                        int result = results[ri];//excludes max + 1
-                        sb.Append(result);
-                        if (ri + 1 < amount) sb.Append(", ");
-                    }
-                    if (rn < rows) sb.Append('\n');
+                    sb.Append(result[i, j]);
+                    if (j < amount - 1) sb.Append(", ");
                 }
-                resultLabel.Text = sb.ToString();
+                if (i < rows - 1) sb.AppendLine();
             }
-		}
+            resultLabel.Text = sb.ToString();
+        }
 	}
+    private int[,] GenerateRows(int min, int max, int amount, int rows, bool uniqueInOneRow, bool uniqueAmongAllRows)
+    {
+        int[,] result = new int[rows, amount];
+
+        if (min > max) throw new ArgumentException("Min cannot be greater than max.");
+        if (uniqueAmongAllRows)
+        {
+            if (amount * rows > max - min + 1) throw new ArgumentException("Not enough unique numbers available for the given parameters.");
+
+            List<int> availableNumbers = [.. Enumerable.Range(min, max - min + 1)];
+            for(int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < amount; j++)
+                {
+                    int index = r.Next(availableNumbers.Count);
+                    result[i, j] = availableNumbers[index];
+                    availableNumbers.RemoveAt(index);
+                }
+            }
+
+        }
+        else if (uniqueInOneRow)
+        {
+            if (amount > max - min + 1) throw new ArgumentException("Not enough unique numbers available for the given parameters.");
+            
+            for (int i = 0; i < rows; i++)
+            {
+                List<int> availableNumbers = [.. Enumerable.Range(min, max - min + 1)];
+                for (int j = 0; j < amount; j++)
+                {
+                    int index = r.Next(availableNumbers.Count);
+                    result[i, j] = availableNumbers[index];
+                    availableNumbers.RemoveAt(index);
+                }
+            }
+        }
+        else
+        {   
+            for (int i = 0; i < rows; i++)
+            {
+                for(int j = 0; j < amount; j++)
+                {
+                    result[i, j] = r.Next(min, max + 1);
+                }
+            }
+        }
+        return result;
+    }
     private void OnUniqueOneRowToggled(object sender, ToggledEventArgs e)
     {
 		if (!swUniqueOneRow.IsToggled) swUniqueAllRows.IsToggled = false;
