@@ -30,13 +30,28 @@ public partial class VariationsPage : ContentPage
     }
     public void OnGenerateClicked(object sender, EventArgs e)
     {
-        if (!(int.TryParse(minEntry.Text, out int min) && int.TryParse(maxEntry.Text, out int max) && int.TryParse(amountEntry.Text, out int amount) && int.TryParse(rowsEntry.Text, out int rows)))
-        {
-            // Show an error message or handle invalid input
-            return;
-        }
         if (modePicker.SelectedIndex == 0)
 		{
+            if (!(int.TryParse(minEntry.Text, out int min) && int.TryParse(maxEntry.Text, out int max) && int.TryParse(amountEntry.Text, out int amount) && int.TryParse(rowsEntry.Text, out int rows)))
+            {
+                DisplayAlertAsync("Error", "Please enter valid integer values for min, max, amount, and rows.", "OK");
+                return;
+            }
+            if(min > max)
+            {
+                DisplayAlertAsync("Error", "Min cannot be greater than max.", "OK");
+                return;
+            }
+            if(swUniqueOneRow.IsToggled && amount > (max - min + 1))
+            {
+                DisplayAlertAsync("Error", "Not enough unique numbers available for the given parameters.", "OK");
+                return;
+            }
+            if(swUniqueAllRows.IsToggled && amount * rows > (max - min + 1))
+            {
+                DisplayAlertAsync("Error", "Not enough unique numbers available for the given parameters.", "OK");
+                return;
+            }
             int[,] result = GenerateNumbersRows(min, max, amount, rows, swUniqueOneRow.IsToggled, swUniqueAllRows.IsToggled);
             resultLabel.Text = FormattedResult(result);
         }
