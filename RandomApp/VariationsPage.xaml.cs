@@ -1,5 +1,4 @@
 using System.Text;
-
 namespace RandomApp;
 
 public partial class VariationsPage : ContentPage
@@ -9,47 +8,41 @@ public partial class VariationsPage : ContentPage
     public VariationsPage()
 	{
         InitializeComponent();
-		swUniqueOneRow.IsToggled =Preferences.Default.Get("UniqueOneRow", false);
+        GetPreferences();
+    }
+    void GetPreferences()
+    {
+        swUniqueOneRow.IsToggled = Preferences.Default.Get("UniqueOneRow", false);
         swUniqueAllRows.IsToggled = Preferences.Default.Get("UniqueAllRows", false);
     }
-
-	public void OnGenerateClicked(object sender, EventArgs e)
+    void SavePreferences()
     {
-        if (!int.TryParse(minEntry.Text, out int min))
-        {
-            return;
-        }
-        if (!int.TryParse(maxEntry.Text, out int max))
-        {
-            return;
-        }
-        if (!int.TryParse(amountEntry.Text, out int amount))
-        {
-            return;
-        }
-        if (!int.TryParse(rowsEntry.Text, out int rows))
-        {
-            return;
-        }
+        Preferences.Default.Set("UniqueOneRow", swUniqueOneRow.IsToggled);
         Preferences.Default.Set("UniqueAllRows", swUniqueAllRows.IsToggled);
-		Preferences.Default.Set("UniqueOneRow", swUniqueOneRow.IsToggled);
+    }
+    private void OnUniqueOneRowToggled(object sender, ToggledEventArgs e)
+    {
+        if (!swUniqueOneRow.IsToggled) swUniqueAllRows.IsToggled = false;
+    }
+    private void OnUniqueAllRowsToggled(object sender, ToggledEventArgs e)
+    {
+        if (swUniqueAllRows.IsToggled) swUniqueOneRow.IsToggled = true;
+    }
+    public void OnGenerateClicked(object sender, EventArgs e)
+    {
+        if (!(int.TryParse(minEntry.Text, out int min) && int.TryParse(maxEntry.Text, out int max) && int.TryParse(amountEntry.Text, out int amount) && int.TryParse(rowsEntry.Text, out int rows)))
+        {
+            // Show an error message or handle invalid input
+            return;
+        }
         if (modePicker.SelectedIndex == 0)
 		{
-            StringBuilder sb = new();
-            int[,] result = GenerateRows(min, max, amount, rows, swUniqueOneRow.IsToggled, swUniqueAllRows.IsToggled);
-            for(int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < amount; j++)
-                {
-                    sb.Append(result[i, j]);
-                    if (j < amount - 1) sb.Append(", ");
-                }
-                if (i < rows - 1) sb.AppendLine();
-            }
-            resultLabel.Text = sb.ToString();
+            int[,] result = GenerateNumbersRows(min, max, amount, rows, swUniqueOneRow.IsToggled, swUniqueAllRows.IsToggled);
+            resultLabel.Text = FormattedResult(result);
         }
+        SavePreferences();
 	}
-    private int[,] GenerateRows(int min, int max, int amount, int rows, bool uniqueInOneRow, bool uniqueAmongAllRows)
+    private int[,] GenerateNumbersRows(int min, int max, int amount, int rows, bool uniqueInOneRow, bool uniqueAmongAllRows)
     {
         int[,] result = new int[rows, amount];
 
@@ -68,12 +61,10 @@ public partial class VariationsPage : ContentPage
                     availableNumbers.RemoveAt(index);
                 }
             }
-
         }
         else if (uniqueInOneRow)
         {
-            if (amount > max - min + 1) throw new ArgumentException("Not enough unique numbers available for the given parameters.");
-            
+            if (amount > max - min + 1) throw new ArgumentException("Not enough unique numbers available for the given parameters.");         
             for (int i = 0; i < rows; i++)
             {
                 List<int> availableNumbers = [.. Enumerable.Range(min, max - min + 1)];
@@ -97,12 +88,19 @@ public partial class VariationsPage : ContentPage
         }
         return result;
     }
-    private void OnUniqueOneRowToggled(object sender, ToggledEventArgs e)
+    static string FormattedResult(int[,] result)
     {
-		if (!swUniqueOneRow.IsToggled) swUniqueAllRows.IsToggled = false;
-    }
-    private void OnUniqueAllRowsToggled(object sender, ToggledEventArgs e)
-    {
-		if(swUniqueAllRows.IsToggled) swUniqueOneRow.IsToggled = true; 
+        StringBuilder sb = new();
+        for (int i = 0; i < result.GetLength(0); i++)
+        {
+            sb.Append($"Row {i + 1}: ");
+            for (int j = 0; j < result.GetLength(1); j++)
+            {
+                sb.Append(result[i, j]);
+                if (j < result.GetLength(1) - 1) sb.Append(", ");
+            }
+            if (i < result.GetLength(0) - 1) sb.AppendLine();
+        }
+        return sb.ToString();
     }
 }
