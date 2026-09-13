@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:RandomApp"
              x:Class="RandomApp.VariationsPage"
              Title="VariationsPage">
     <ScrollView>
-            <VerticalStackLayout>
-        <Entry x:Name="minEntry" Placeholder="Minimum number"/>
-        <Entry x:Name="maxEntry" Placeholder="Maximum number"/>
-        <Entry x:Name="amountEntry" Placeholder="Amount"/>
-        <Button Text="Generate" Clicked="OnGenerateClicked"/>
-        <Label x:Name="resultLabel"/>
-    </VerticalStackLayout>
+        <VerticalStackLayout>
+            <HorizontalStackLayout>
+                <Picker x:Name="modePicker" ItemsSource="{x:Static local:VariationsPage.pickerOptions}" SelectedIndex="0"/>
+                <Label Text="From"/>
+                <Entry x:Name="minEntry" Text="1"/>
+                <Label Text="To"/>
+                <Entry x:Name="maxEntry" Text="10"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Amount in row"/>
+                <Entry x:Name="amountEntry" Text="5"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Number of rows"/>
+                <Entry x:Name="rowsEntry" Text="1"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Unique in one row"/>
+                <Switch x:Name="swUniqueOneRow" Toggled="swUniqueOneRow_Toggled"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Unique among all rows"/>
+                <Switch x:Name="swUniqueAllRows" Toggled="swUniqueAllRows_Toggled"/>
+            </HorizontalStackLayout>
+            <Button Text="Generate" Clicked="OnGenerateClicked"/>
+            <Label x:Name="resultLabel"/>
+        </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

@@ -3,28 +3,74 @@ using System.Text;
 namespace RandomApp;
 
 public partial class VariationsPage : ContentPage
-{
-	public VariationsPage()
+{  
+    public static readonly List<string> pickerOptions = ["Numbers", "From preset"];
+	readonly Random r = new();
+    public VariationsPage()
 	{
-		InitializeComponent();
-		Random r = new Random();
+        InitializeComponent();
+		swUniqueOneRow.IsToggled =Preferences.Get("UniqueOneRow", false);
+        swUniqueAllRows.IsToggled = Preferences.Get("UniqueAllRows", false);
     }
+
 	public void OnGenerateClicked(object sender, EventArgs e)
     {
-		Random r = new Random();
-		int min = int.Parse(minEntry.Text);
-		int max = int.Parse(maxEntry.Text) + 1;
-		int amount = int.Parse(amountEntry.Text);
-		//resultLabel.Text = string.Empty;
-		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i < amount; i++)
+        if (!int.TryParse(minEntry.Text, out int min))
+        {
+            return;
+        }
+        if (!int.TryParse(maxEntry.Text, out int max))
+        {
+            return;
+        }
+        if (!int.TryParse(amountEntry.Text, out int amount))
+        {
+            return;
+        }
+        if (!int.TryParse(rowsEntry.Text, out int rows))
+        {
+            return;
+        }
+        Preferences.Set("UniqueAllRows", swUniqueAllRows.IsToggled);
+		Preferences.Set("UniqueOneRow", swUniqueOneRow.IsToggled);
+        if (modePicker.SelectedIndex == 0)
 		{
-			int result = r.Next(min, max);
-			sb.Append(result);
-			//resultLabel.Text += result;
+			if (swUniqueOneRow.IsToggled)
+			{
+				if (swUniqueAllRows.IsToggled)
+				{
 
-			if (i + 1 < amount) sb.Append(", ");//resultLabel.Text += ", ";
+				}
+				else
+				{
+
+				}
+			}
+			else
+			{
+                StringBuilder sb = new();
+                for (int rn = 1; rn <= rows; rn++)//row number
+                {
+                    sb.Append($"Row {rn}: ");
+                    int[] results = r.GetItems<int>(Enumerable.Range(min, max - min + 1).ToArray(), amount);
+                    for (int ri = 0; ri < amount; ri++)//row index
+                    {
+                        int result = results[ri];//excludes max + 1
+                        sb.Append(result);
+                        if (ri + 1 < amount) sb.Append(", ");
+                    }
+                    if (rn < rows) sb.Append('\n');
+                }
+                resultLabel.Text = sb.ToString();
+            }
 		}
-		resultLabel.Text = sb.ToString();
+	}
+    private void swUniqueOneRow_Toggled(object sender, ToggledEventArgs e)
+    {
+		if (!swUniqueOneRow.IsToggled) swUniqueAllRows.IsToggled = false;
+    }
+    private void swUniqueAllRows_Toggled(object sender, ToggledEventArgs e)
+    {
+		if(swUniqueAllRows.IsToggled) swUniqueOneRow.IsToggled = true; 
     }
 }
