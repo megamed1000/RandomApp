@@ -9,17 +9,17 @@
             <HorizontalStackLayout>
                 <Picker x:Name="modePicker" ItemsSource="{x:Static local:VariationsPage.pickerOptions}" SelectedIndex="0"/>
                 <Label Text="From"/>
-                <Entry x:Name="minEntry" Text="1"/>
+                <Entry Keyboard="Numeric" x:Name="minEntry" Text="1"/>
                 <Label Text="To"/>
-                <Entry x:Name="maxEntry" Text="10"/>
+                <Entry Keyboard="Numeric" x:Name="maxEntry" Text="10"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout>
                 <Label Text="Amount in row"/>
-                <Entry x:Name="amountEntry" Text="5"/>
+                <Entry Keyboard="Numeric" x:Name="amountEntry" Text="5"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout>
                 <Label Text="Number of rows"/>
-                <Entry x:Name="rowsEntry" Text="1"/>
+                <Entry Keyboard="Numeric" x:Name="rowsEntry" Text="1"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout>
                 <Label Text="Unique in one row"/>
