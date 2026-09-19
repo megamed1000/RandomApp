@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="RandomMAUI.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:RandomMAUI"
+    Title="Random App">
+    <TabBar>
+        <Tab Title="Variations"
+            Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate local:VariationsPage}" />
+        </Tab>
+        <Tab Title="Probabilities"
+            Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate local:ProbabilityPage}" />
+        </Tab>
+        <Tab Title="Presets"
+            Icon="dotnet_bot.png">
+            <ShellContent ContentTemplate="{DataTemplate local:PresetsPage}" />
+        </Tab>
+    </TabBar>
+</Shell>

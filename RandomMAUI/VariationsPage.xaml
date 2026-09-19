@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:RandomMAUI"
+             x:Class="RandomMAUI.VariationsPage"
+             Title="Variations">
+    <ScrollView>
+        <VerticalStackLayout>
+            <HorizontalStackLayout>
+                <Picker x:Name="modePicker" ItemsSource="{x:Static local:VariationsPage.pickerOptions}" SelectedIndex="0"/>
+                <Label Text="From"/>
+                <Entry Keyboard="Numeric" x:Name="minEntry" Placeholder="1"/>
+                <Label Text="To"/>
+                <Entry Keyboard="Numeric" x:Name="maxEntry" Placeholder="10"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Amount in row"/>
+                <Entry Keyboard="Numeric" x:Name="amountEntry" Placeholder="4"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Number of rows"/>
+                <Entry Keyboard="Numeric" x:Name="rowsEntry" Placeholder="2"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Unique in one row"/>
+                <Switch x:Name="swUniqueOneRow" Toggled="OnUniqueOneRowToggled"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Unique among all rows"/>
+                <Switch x:Name="swUniqueAllRows" Toggled="OnUniqueAllRowsToggled"/>
+            </HorizontalStackLayout>
+            <Button Text="Generate" Clicked="OnGenerateClicked"/>
+            <Label x:Name="resultLabel"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

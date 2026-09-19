@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="RandomApp/RandomApp.csproj" />
+  <Project Path="RandomLibrary/RandomLibrary.csproj" Id="edeea704-8953-4526-a5dd-3aaace4c14a0" />
+  <Project Path="RandomMAUI/RandomMAUI.csproj" Id="f3df98e1-2af0-438b-9caa-c633b4703f28">
+    <Deploy Solution="Debug|*" />
+  </Project>
 </Solution>
