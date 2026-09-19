@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:RandomMAUI"
              x:Class="RandomMAUI.ProbabilityPage"
              Title="ProbabilityPage">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <HorizontalStackLayout>
+            <Picker x:Name="modePicker" ItemsSource="{x:Static local:VariationsPage.pickerOptions}" SelectedIndex="0"/>
+            <Label Text="From"/>
+            <Entry Keyboard="Numeric" x:Name="minEntry" Placeholder="1"/>
+            <Label Text="To"/>
+            <Entry Keyboard="Numeric" x:Name="maxEntry" Placeholder="10"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Label Text="Probability"/>
+            <Entry x:Name="probabilityEntry" Placeholder="67"/>
+            <Label Text="%"/>
+        </HorizontalStackLayout>
+        <Button Text="Generate" Clicked="OnGenerateClicked"/>
+        <Label x:Name="resultLabel"/>
     </VerticalStackLayout>
 </ContentPage>

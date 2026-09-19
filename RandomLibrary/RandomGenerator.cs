@@ -119,5 +119,18 @@ namespace RandomLibrary
             }
             return variations;
         }
+        public static List<int> GenerateNumericProbability(int min, int max, double probability)
+        {
+            if (probability < 0 || probability > 1) throw new Exception("bad probability value");
+            List<int> results = [];
+            for(int i = min; i <=max; i++)
+            {
+                if(random.NextDouble() < probability)
+                {
+                    results.Add(i);
+                }
+            }
+            return results;
+        }
     }
 }
