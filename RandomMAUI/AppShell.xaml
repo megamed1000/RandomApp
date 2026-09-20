@@ -7,11 +7,11 @@
     Title="Random App">
     <TabBar>
         <Tab Title="Variations"
-            Icon="variationicon.png">
+            Icon="variation_icon.png">
             <ShellContent ContentTemplate="{DataTemplate local:VariationsPage}" />
         </Tab>
         <Tab Title="Probabilities"
-            Icon="probabilityicon.png">
+            Icon="probability_icon.png">
             <ShellContent ContentTemplate="{DataTemplate local:ProbabilityPage}" />
         </Tab>
     </TabBar>

@@ -1,7 +1,5 @@
 using RandomLibrary;
-using System.Text;
 namespace RandomMAUI;
-
 public partial class ProbabilityPage : ContentPage
 {
     public ProbabilityPage()
@@ -11,7 +9,6 @@ public partial class ProbabilityPage : ContentPage
     private void OnGenerateClicked(object sender, EventArgs e)
     {
         int[] results;
-        resultLabel.Text = "OOF";
         if (int.TryParse(minEntry.Text, out int min) && int.TryParse(maxEntry.Text, out int max) && double.TryParse(probabilityEntry.Text, out double percentage))
         {
             if (percentage < 0 || percentage > 100)
