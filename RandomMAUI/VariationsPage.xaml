@@ -7,7 +7,6 @@
     <ScrollView>
         <VerticalStackLayout>
             <HorizontalStackLayout>
-                <Picker x:Name="modePicker" ItemsSource="{x:Static local:VariationsPage.pickerOptions}" SelectedIndex="0"/>
                 <Label Text="From"/>
                 <Entry Keyboard="Numeric" x:Name="minEntry" Placeholder="1"/>
                 <Label Text="To"/>

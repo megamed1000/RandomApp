@@ -4,7 +4,6 @@ namespace RandomMAUI;
 
 public partial class VariationsPage : ContentPage
 {
-    public static readonly List<string> pickerOptions = ["Numbers"];// TODO: "From preset"
     public VariationsPage()
 	{
 		InitializeComponent();
@@ -30,6 +29,7 @@ public partial class VariationsPage : ContentPage
     }
     private void OnGenerateClicked(object sender, EventArgs e)
     {
+
         if (modePicker.SelectedIndex == 0)
 		{
             if (!(int.TryParse(minEntry.Text, out int min) && int.TryParse(maxEntry.Text, out int max) && int.TryParse(amountEntry.Text, out int amount) && int.TryParse(rowsEntry.Text, out int rows)))
@@ -52,6 +52,11 @@ public partial class VariationsPage : ContentPage
                 DisplayAlertAsync("Error", "Not enough unique numbers available for the given parameters.", "OK");
                 return;
             }
+            if(amount < 1 || rows < 1)
+            {
+                DisplayAlertAsync("Error", "Amount and rows must be at least 1", "OK");
+                return;
+            }
             int[,] result;
             if (swUniqueAllRows.IsToggled)
             {
@@ -68,5 +73,9 @@ public partial class VariationsPage : ContentPage
             resultLabel.Text = StringOperations.FormattedArray2D(result);
         }
         SavePreferences();
+    }
+    private void ValidateInput()
+    {
+
     }
 }

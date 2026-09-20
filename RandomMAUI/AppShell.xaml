@@ -7,16 +7,12 @@
     Title="Random App">
     <TabBar>
         <Tab Title="Variations"
-            Icon="dotnet_bot.png">
+            Icon="variationicon.png">
             <ShellContent ContentTemplate="{DataTemplate local:VariationsPage}" />
         </Tab>
         <Tab Title="Probabilities"
-            Icon="dotnet_bot.png">
+            Icon="probabilityicon.png">
             <ShellContent ContentTemplate="{DataTemplate local:ProbabilityPage}" />
-        </Tab>
-        <Tab Title="Presets"
-            Icon="dotnet_bot.png">
-            <ShellContent ContentTemplate="{DataTemplate local:PresetsPage}" />
         </Tab>
     </TabBar>
 </Shell>

@@ -6,15 +6,14 @@
              Title="ProbabilityPage">
     <VerticalStackLayout>
         <HorizontalStackLayout>
-            <Picker x:Name="modePicker" ItemsSource="{x:Static local:VariationsPage.pickerOptions}" SelectedIndex="0"/>
             <Label Text="From"/>
-            <Entry Keyboard="Numeric" x:Name="minEntry" Placeholder="1"/>
+            <Entry MaxLength="9" Keyboard="Numeric" x:Name="minEntry" Placeholder="1"/>
             <Label Text="To"/>
-            <Entry Keyboard="Numeric" x:Name="maxEntry" Placeholder="10"/>
+            <Entry MaxLength="9" Keyboard="Numeric" x:Name="maxEntry" Placeholder="10"/>
         </HorizontalStackLayout>
         <HorizontalStackLayout>
             <Label Text="Probability"/>
-            <Entry Keyboard="Numeric"  x:Name="probabilityEntry" Placeholder="67"/>
+            <Entry MaxLength="3" Keyboard="Numeric"  x:Name="probabilityEntry" Placeholder="67"/>
             <Label Text="%"/>
         </HorizontalStackLayout>
         <Button Text="Generate" Clicked="OnGenerateClicked"/>
