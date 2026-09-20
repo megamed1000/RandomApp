@@ -14,7 +14,7 @@
         </HorizontalStackLayout>
         <HorizontalStackLayout>
             <Label Text="Probability"/>
-            <Entry x:Name="probabilityEntry" Placeholder="67"/>
+            <Entry Keyboard="Numeric"  x:Name="probabilityEntry" Placeholder="67"/>
             <Label Text="%"/>
         </HorizontalStackLayout>
         <Button Text="Generate" Clicked="OnGenerateClicked"/>

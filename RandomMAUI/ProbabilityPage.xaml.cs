@@ -17,7 +17,7 @@ public partial class ProbabilityPage : ContentPage
         if (int.TryParse(minEntry.Text, out int min) && int.TryParse(maxEntry.Text, out int max) && double.TryParse(probabilityEntry.Text, out double percentage))
         {
             results = [.. RandomGenerator.GenerateNumericProbability(min, max, percentage/100)];
-            resultLabel.Text = FormattedResult(results);
+            resultLabel.Text = StringOperations.FormattedArray1D(results);
         }
     }
     private static string FormattedResult(int[] result)

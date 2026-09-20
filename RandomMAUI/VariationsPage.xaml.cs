@@ -65,23 +65,8 @@ public partial class VariationsPage : ContentPage
             {
                 result = RandomGenerator.GenerateNumericVariations(min, max, amount, rows, NumericVariationOptions.WithRepetition);
             }
-            resultLabel.Text = FormattedResult(result);
+            resultLabel.Text = StringOperations.FormattedArray2D(result);
         }
         SavePreferences();
-    }
-    private static string FormattedResult(int[,] result)
-    {
-        StringBuilder sb = new();
-        for (int i = 0; i < result.GetLength(0); i++)
-        {
-            sb.Append($"Row {i + 1}: ");
-            for (int j = 0; j < result.GetLength(1); j++)
-            {
-                sb.Append(result[i, j]);
-                if (j < result.GetLength(1) - 1) sb.Append(", ");
-            }
-            if (i < result.GetLength(0) - 1) sb.AppendLine();
-        }
-        return sb.ToString();
     }
 }
