@@ -6,7 +6,7 @@ public partial class ProbabilityPage : ContentPage
     {
         InitializeComponent();
     }
-    private void OnGenerateClicked(object sender, EventArgs e)
+    private void OnGenerateClicked(object? sender, EventArgs e)
     {
         int[] results;
         if (int.TryParse(minEntry.Text, out int min) && int.TryParse(maxEntry.Text, out int max) && double.TryParse(probabilityEntry.Text, out double percentage))

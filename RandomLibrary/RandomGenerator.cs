@@ -7,8 +7,7 @@ public enum NumericVariationOptions
     UniqueInAllVariations
 }
 public static class RandomGenerator
-{
-    private static readonly Random random = new();
+{   
     public static int[,] GenerateNumericVariations(int min, int max,
         int variationLength, int variationsAmount, NumericVariationOptions option)
     {
@@ -69,7 +68,7 @@ public static class RandomGenerator
         int[] variation = new int[length];
         for (int i = 0; i < length; i++)
         {
-            variation[i] = random.Next(min, max + 1);
+            variation[i] = Random.Shared.Next(min, max + 1);
         }
         return variation;
     }
@@ -83,7 +82,7 @@ public static class RandomGenerator
         int[] variation = new int[length];
         for (int i = 0; i < length; i++)
         {
-            int index = random.Next(0, numbers.Count);
+            int index = Random.Shared.Next(0, numbers.Count);
             int number = numbers[index];
             variation[i] = number;
             numbers.RemoveAt(index);
@@ -103,7 +102,7 @@ public static class RandomGenerator
             int[] variation = new int[variationLength];
             for (int j = 0; j < variationLength; j++)
             {
-                int index = random.Next(0, numbers.Count);
+                int index = Random.Shared.Next(0, numbers.Count);
                 int number = numbers[index];
                 variation[j] = number;
                 numbers.RemoveAt(index);
@@ -121,7 +120,7 @@ public static class RandomGenerator
         List<int> results = [];
         for (int i = min; i <= max; i++)
         {
-            if (random.NextDouble() < probability)
+            if (Random.Shared.NextDouble() < probability)
             {
                 results.Add(i);
             }

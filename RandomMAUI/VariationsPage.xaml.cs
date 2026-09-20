@@ -17,15 +17,15 @@ public partial class VariationsPage : ContentPage
         Preferences.Default.Set("UniqueOneRow", swUniqueOneRow.IsToggled);
         Preferences.Default.Set("UniqueAllRows", swUniqueAllRows.IsToggled);
     }
-    private void OnUniqueOneRowToggled(object sender, ToggledEventArgs e)
+    private void OnUniqueOneRowToggled(object? sender, ToggledEventArgs e)
     {
         if (!swUniqueOneRow.IsToggled) swUniqueAllRows.IsToggled = false;
     }
-    private void OnUniqueAllRowsToggled(object sender, ToggledEventArgs e)
+    private void OnUniqueAllRowsToggled(object? sender, ToggledEventArgs e)
     {
         if (swUniqueAllRows.IsToggled) swUniqueOneRow.IsToggled = true;
     }
-    private void OnGenerateClicked(object sender, EventArgs e)
+    private void OnGenerateClicked(object? sender, EventArgs e)
     {
         bool error = false;
         string message = string.Empty;
